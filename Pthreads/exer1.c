@@ -24,6 +24,8 @@ void *printResult(){
     pthread_exit(0);
 }
 
+// O Problema da abordagem solicitada, é que como dependemos de colocar o join na frente de cada create, ele torna o codigo sequencial!
+
 int main(int argc, char *argv[]){
     pthread_t tid, tid2, tid3;
 
