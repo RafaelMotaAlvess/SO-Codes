@@ -16,19 +16,13 @@ int global = 0;
 
 void *sensor(){
     int local = 0;
-    while(1){
+    while(global < 100){
+        global++;
+        local++;
+        printf("Valor local: %d \n", local);
         sleep(1);
-
-        printf("Variavel Local: %d \n", local);
-        printf("Variavel global: %d \n", global);
-
-        if(global < 100){
-            global++;
-            local++;
-        } else { 
-            pthread_exit(0);
-        }
     }
+    pthread_exit(0);
 }
 
 
@@ -47,6 +41,8 @@ int main(int argc, char *argv[]){
     for(int i=0; i < 3; i++){
         pthread_join(tid[i], NULL);
     }
+
+    printf("Valor global: %d \n", global);
 }
 
 // a. todas as threads tem o mesmo valor na variavel interna? 
