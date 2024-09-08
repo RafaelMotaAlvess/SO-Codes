@@ -10,11 +10,21 @@ typedef struct Task {
     int arg1, arg2;
 } Task;
 
-void sumAndProduct(int a, int b){
-    int sum = a + b;
-    int prod = a * b;
+// void sumAndProduct(int a, int b){
+//     int sum = a + b;
+//     int prod = a * b;
 
-    printf("Sum and product of %d and %d is %d and %d\n", a, b, sum, prod);
+//     printf("Sum and product of %d and %d is %d and %d\n", a, b, sum, prod);
+// }
+
+void sum(int a, int b) {
+    int sum = a + b;
+    printf("Sum of %d and %d is %d\n", a, b, sum);
+}
+
+void product(int a, int b) {
+    int prod = a * b;
+    printf("Product of %d and %d is %d\n", a, b, prod);
 }
 
 Task taskQueue[256];
@@ -89,11 +99,11 @@ int main(int argc, char *argv[]){
     // cria as tasks que as threads irão fazer
     for(i = 0; i < 100; i++){
         Task t = {
-            .taskFunction = &sumAndProduct,
+            .taskFunction = i % 2 == 0 ?  &sum : &product,
             .arg1 = rand() % 100,
             .arg2 = rand() % 100
         };
-
+        
         submitTask(t);
     }
 
