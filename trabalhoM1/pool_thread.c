@@ -6,8 +6,17 @@
 #define THREAD_NUM 4
 
 typedef struct Task {
-    int a, b;
+    void (*taskFunction)();
 } Task;
+
+void sumAndProduct(int a, int b){
+    int a = rand() % 100;
+    int b = rand() % 100;
+    int sum = a + b;
+    int prod = a * b;
+
+    printf("Sum and product of %d and %d is %d and %d\n", a, b, sum, prod);
+}
 
 Task taskQueue[256];
 int taskCount = 0;
@@ -17,8 +26,9 @@ pthread_cond_t condQueue;
 
 // funcao a ser executada pela thread relacionado a fila.
 void executeTask(Task* task){
-    int result = task->a + task->b;
-    printf("The sum of %d and %d is %d\n", task->a, task->b, result);
+    task->taskFunction();
+    // int result = task->a + task->b;
+    // printf("The sum of %d and %d is %d\n", task->a, task->b, result);
 }
 
 // funcao para adicionar uma task a fila de tasks
@@ -80,8 +90,7 @@ int main(int argc, char *argv[]){
     // cria as tasks que as threads irão fazer
     for(i = 0; i < 100; i++){
         Task t = {
-            .a = rand() % 100,
-            .b = rand() % 100
+            .taskFunction = &sumAndProduct
         };
 
         submitTask(t);
