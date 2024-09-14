@@ -1,4 +1,4 @@
-Para rodar o projeto, certifiquesse que esta dentro da pasta do projeto `/trabalhoM1` E faça os seguintes passos
+Para rodar o projeto, certifiquesse que esta dentro da pasta do projeto `M1/trabalhoM1` E faça os seguintes passos
 
 no terminal, rode os seguintes comandos
 
