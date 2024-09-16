@@ -34,10 +34,10 @@ int main(int argc, char* argv[]) {
         }
 
         // Lida com conexões de números
-        client_socket = acceptConnection(number_socket, &remote);
-        if (client_socket >= 0) {
-            handleClientConnection(client_socket, handleNumberConnection);
-        }
+        // client_socket = acceptConnection(number_socket, &remote);
+        // if (client_socket >= 0) {
+        //     handleClientConnection(client_socket, handleNumberConnection);
+        // }
     }
 
     cleanupResources();

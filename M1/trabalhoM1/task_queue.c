@@ -13,6 +13,7 @@ pthread_mutex_t stdout_mutex;
 
 void initializeThreadPool() {
     for (int i = 0; i < THREAD_POOL_SIZE; i++) {
+        // printf("THREAD POOL SIZE: %d", THREAD_POOL_SIZE)        ; 
         if (pthread_create(&th_pool[i], NULL, &startThread, NULL) != 0) {
             logError("Falha ao criar a thread");
         }
@@ -20,10 +21,10 @@ void initializeThreadPool() {
 }
 
 void executeTask(Task* task) {
-    usleep(500000);
+    // usleep(500000);
     pthread_mutex_lock(&stdout_mutex);
-    printf("====\n");
-    printf("Thread %lu processando tarefa.\n", pthread_self());
+    // printf("====\n");
+    // printf("Thread %lu processando tarefa.\n", pthread_self());
     pthread_mutex_unlock(&stdout_mutex);
 
     task->taskFunction(task->arg1); 
@@ -31,8 +32,8 @@ void executeTask(Task* task) {
     pthread_mutex_lock(&mutexQueue);
     if (taskCount == 0) {
         pthread_mutex_lock(&stdout_mutex);
-        printf("Fila vazia. Nenhuma conexão pendente.\n");
-        printf("====\n");
+        // printf("Fila vazia. Nenhuma conexão pendente.\n");
+        // printf("====\n");
         pthread_mutex_unlock(&stdout_mutex);
     }
     pthread_mutex_unlock(&mutexQueue);

@@ -56,6 +56,7 @@ void handleStringConnection(int* p_client_socket) {
     int client_socket = *((int*)p_client_socket);
     free(p_client_socket);
     char buffer[BUFFER_SIZE];
+    memset(buffer, 0, sizeof(buffer));  
 
     if (read(client_socket, buffer, sizeof(buffer)) < 0) {
         pthread_mutex_lock(&stdout_mutex);
@@ -66,7 +67,7 @@ void handleStringConnection(int* p_client_socket) {
     }
 
     pthread_mutex_lock(&stdout_mutex);
-    printf("String recebida: %s\n", buffer);
+    // printf("String recebida: %s\n", buffer);
     pthread_mutex_unlock(&stdout_mutex);
 
     // Converte a string para maiúsculas
@@ -83,7 +84,7 @@ void handleStringConnection(int* p_client_socket) {
     }
 
     pthread_mutex_lock(&stdout_mutex);
-    printf("String processada e enviada de volta.\n");
+    // printf("String processada e enviada de volta.\n");
     pthread_mutex_unlock(&stdout_mutex);
 
     close(client_socket);
@@ -97,8 +98,10 @@ void handleNumberConnection(int* p_client_socket) {
     int client_socket = *((int*)p_client_socket);
     free(p_client_socket);
     char buffer[BUFFER_SIZE];
+    memset(buffer, 0, sizeof(buffer));
 
-    if (read(client_socket, buffer, sizeof(buffer)) < 0) {
+    ssize_t bytes_read = read(client_socket, buffer, sizeof(buffer) - 1);  // Lê os dados
+    if (bytes_read < 0) {
         pthread_mutex_lock(&stdout_mutex);
         perror("Falha em ler do socket");
         pthread_mutex_unlock(&stdout_mutex);
@@ -106,15 +109,18 @@ void handleNumberConnection(int* p_client_socket) {
         return;
     }
 
+    buffer[bytes_read] = '\0';  // Garante a terminação da string
+
     int number = atoi(buffer);
     pthread_mutex_lock(&stdout_mutex);
     printf("Número recebido: %d\n", number);
     pthread_mutex_unlock(&stdout_mutex);
 
+    // Processa o número
     number *= 2;
     snprintf(buffer, sizeof(buffer), "%d", number);
 
-    if (write(client_socket, buffer, strlen(buffer) + 1) < 0) {
+    if (write(client_socket, buffer, strlen(buffer)) < 0) {
         pthread_mutex_lock(&stdout_mutex);
         perror("Falha em escrever no socket");
         pthread_mutex_unlock(&stdout_mutex);
