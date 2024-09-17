@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        ".sequelizerc": "javascript",
+        ".stylelintrc": "json",
+        "*.tsx": "typescriptreact",
+        ".env.*": "dotenv",
+        ".prettierrc": "json",
+        "*.py": "python",
+        "stdio.h": "c",
+        "types.h": "c",
+        "socket.h": "c",
+        "un.h": "c",
+        "socket_handler.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
