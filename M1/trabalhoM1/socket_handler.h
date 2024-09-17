@@ -1,7 +1,7 @@
 #ifndef SOCKET_HANDLER_H
 #define SOCKET_HANDLER_H
 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 8096
 
 extern pthread_mutex_t stdout_mutex;
 extern pthread_mutex_t client_count_mutex;
